@@ -1,0 +1,51 @@
+networks:
+    net:
+        driver: bridge
+
+services:
+    beamlinex.api:
+        image: ${DOCKER_REGISTRY-}beamlinexapi
+        container_name: BeamlineX.Api
+        ports:
+            - "5050:443"
+        build:
+              context: .
+              dockerfile: BeamlineX.Api/Dockerfile
+        environment:
+            DbContextConnection: "Host=$DB_HOST;Port=$DB_PORT;Database=$DB_NAME;Username=$DB_USER;Password=$DB_PASS;"
+        networks:
+            - net
+
+    beamlinex.db:
+        image: postgres:latest
+        container_name: BeamlineX.Db
+        restart: always
+        environment:
+            - POSTGRES_USER=$DB_USER
+            - POSTGRES_PASSWORD=$DB_PASS
+        ports:
+            - "$DB_PORT:5432"
+        volumes:
+            - db:/var/lib/postgresql/data
+        networks:
+            - net
+
+    beamlinex.dbadmin:
+        image: dpage/pgadmin4
+        container_name: BeamlineX.DbAdmin
+        restart: always
+        environment:
+            PGADMIN_DEFAULT_EMAIL: $PGADMIN_EMAIL
+            PGADMIN_DEFAULT_PASSWORD: $PGADMIN_PASS
+        ports:
+            - "5000:80"
+        volumes:
+            - dbadmin-conf:/var/lib/pgadmin
+        networks:
+            - net
+
+volumes:
+    db:
+        driver: local
+    dbadmin-conf:
+        driver: local

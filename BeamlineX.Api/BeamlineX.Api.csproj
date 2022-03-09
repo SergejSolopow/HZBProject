@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>BeamlineX.Api</RootNamespace>
+    <UserSecretsId>b20284c6-f4b2-4c43-909d-d98e82351652</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerLounchAction>LounchBrowser</DockerLounchAction>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\MeasureSetControllers.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BeamlineX.Common\BeamlineX.Common.csproj" />
+    <ProjectReference Include="..\BeamlineX.Domain\BeamlineX.Domain.csproj" />
+    <ProjectReference Include="..\BeamlineX.DtoMapper\BeamlineX.DtoMapper.csproj" />
+    <ProjectReference Include="..\BeamlineX.Dtos\BeamlineX.Dtos.csproj" />
+    <ProjectReference Include="..\BeamlineX.Repositories.Abstraction\BeamlineX.Repositories.Abstraction.csproj" />
+    <ProjectReference Include="..\BeamlineX.Repositories\BeamlineX.Repositories.csproj" />
+  </ItemGroup>
+
+</Project>
